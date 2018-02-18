@@ -104,12 +104,33 @@ public class Liste<T>{
                             tmp = tmp.getSuivant();
                         }
                     }
+                    /*if (tmp.getSuivant() != null && mc.getInfo().compareTo(tmp.getSuivant().getInfo()) != 0) {
+                        mc.setSuivant(tmp.getSuivant());
+                        tmp.setSuivant(mc);
+                    }*/
                     mc.setSuivant(tmp.getSuivant());
                     tmp.setSuivant(mc);
                 }
             }
         } else {
             this.ajouterEnTete(m);
+        }
+        this.supprimerDoublons();
+    }
+
+    public void supprimerDoublons() {
+        Maillon<Coordonnee> m = (Maillon<Coordonnee>) this.getTete();
+        Maillon<Coordonnee> suiv = m.getSuivant();
+
+        while (suiv != null) {
+            while (suiv != null && m.getInfo().compareTo(suiv.getInfo()) == 0) {
+                m.setSuivant(suiv.getSuivant());
+                suiv = suiv.getSuivant();
+            }
+            m = m.getSuivant();
+            if (suiv != null) {
+                suiv = suiv.getSuivant();
+            }
         }
     }
 
@@ -202,24 +223,46 @@ public class Liste<T>{
     @Override
     public String toString() {
         String s = "";
-        if(!this.estVide()){
+        if (!this.estVide()) {
             Maillon<Coordonnee> tmp = (Maillon<Coordonnee>) this.getTete();
-            for (int l=minLigne();l<=maxLigne();l++){
-                for (int c=minColonne();c<=maxColonne();c++){
-                    Maillon<Coordonnee> m=new Maillon<Coordonnee>(new Coordonnee(l,c),null);
-                    if(tmp.getSuivant() != null) {
-                        if (m.getInfo().compareTo(tmp.getInfo()) == 0) {
-                            s += '*';
+
+            //affichage des coordonnees
+            /*while (tmp != null) {
+                s += "(" + tmp.getInfo().getLigne() + ";" + tmp.getInfo().getColonne() + ")\n";
+                tmp = tmp.getSuivant();
+            }*/
+
+            tmp = (Maillon<Coordonnee>) this.getTete();
+            int minL = this.minLigne();
+            int minC = this.minColonne();
+            int maxL = this.maxLigne();
+            int maxC = this.maxColonne();
+            for (int l = minL; l <= maxL; l++){
+                for (int c = minC; c <= maxC; c++){
+                    if (tmp != null) {
+                        if (tmp.getInfo().getLigne() == l && tmp.getInfo().getColonne() == c) {
+                            s += "*";
                             tmp = tmp.getSuivant();
-                        } else {
-                            s += '.';
+                        }else{
+                            s += ".";
                         }
+                    } else {
+                        s += ".";
                     }
                 }
-                s+="\n";
+                s += "\n";
             }
         }
         return s;
+    }
+
+    public void afficherListe(Liste<Coordonnee> l) {
+        Maillon<Coordonnee> m = l.getTete();
+        while (m.getSuivant() != null) {
+            System.out.print(m.toString() + "\n");
+            m = m.getSuivant();
+        }
+        System.out.print(m.toString() + "\n");
     }
 
     // Juliette
@@ -320,5 +363,76 @@ public class Liste<T>{
             }
         }
         return 5;
+    }
+
+    public boolean contient(Maillon<Coordonnee> m) {
+        Maillon<Coordonnee> tmp = (Maillon<Coordonnee>) this.getTete();
+        Maillon<Coordonnee> mc = (Maillon<Coordonnee>) m;
+        while (tmp != null) {
+            if (tmp.getInfo().compareTo(mc.getInfo()) == 0) {
+                return true;
+            } else {
+                if (tmp.getInfo().compareTo(mc.getInfo()) == 1) {
+                    return false;
+                }
+            }
+            tmp = tmp.getSuivant();
+        }
+        return false;
+    }
+
+    public Liste<Coordonnee> genSuivante() {
+
+        Liste<Coordonnee> nliste = new Liste(); //Nouvelle génération
+        Liste<Coordonnee> lc = new Liste(); //Map
+
+        int minColonne = this.minColonne()-1;
+        int maxColonne = this.maxColonne()+1;
+        int minLigne = this.minLigne()-1;
+        int maxLigne = this.maxLigne()+1;
+
+        for (int l = minLigne; l <= maxLigne; l++){
+            for (int c = minColonne; c <= maxColonne; c++){
+                lc.ajouterMaillon(new Maillon<Coordonnee>(new Coordonnee(l,c), null));
+            }
+        }
+
+        Maillon<Coordonnee> tmplc = lc.getTete();
+
+        while (tmplc != null) {
+            int nombreVoisins = nombreVoisins(tmplc);
+
+            if (this.contient(tmplc)) {
+                if (nombreVoisins == 2 || nombreVoisins == 3) {
+                    nliste.ajouterMaillon(new Maillon<Coordonnee>(new Coordonnee(tmplc.getInfo().getLigne(), tmplc.getInfo().getColonne()), null));
+                }
+            } else {
+                if (nombreVoisins == 3) {
+                    nliste.ajouterMaillon(new Maillon<Coordonnee>(new Coordonnee(tmplc.getInfo().getLigne(), tmplc.getInfo().getColonne()), null));
+                }
+            }
+
+            tmplc = tmplc.getSuivant();
+        }
+
+        return nliste;
+    }
+
+    public int nombreVoisins(Maillon<Coordonnee> tmplc) {
+
+        int l = tmplc.getInfo().getLigne();
+        int c = tmplc.getInfo().getColonne();
+        int nombreVoisins = 0;
+
+        for (int i = -1; i < 2; i++) {
+            for (int j = -1; j < 2; j++) {
+                Maillon<Coordonnee> mc = new Maillon<Coordonnee>(new Coordonnee(l+i, c+j), null);
+                if (this.contient(mc) && mc.getInfo().compareTo(tmplc.getInfo()) != 0) {
+                    nombreVoisins++;
+                }
+            }
+        }
+
+        return nombreVoisins;
     }
 }
