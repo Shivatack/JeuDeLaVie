@@ -16,7 +16,6 @@ public class GestionFichier {
         BufferedReader br = new BufferedReader(fr);
         String bloc = "";
         String line = "";
-        int aff = 1;
         boolean debut = true;
         while ((line = br.readLine()) != null) { // Parcours du fichier
             StringTokenizer st = new StringTokenizer(line);
@@ -66,7 +65,7 @@ public class GestionFichier {
                     //calcul = colonne + i;
                     //System.out.print(calcul + "***\n");
                     Coordonnee c = new Coordonnee((ligne + compteur), (colonne + i));
-                    Maillon<Coordonnee> m = new Maillon<Coordonnee>(c, null);
+                    Maillon<Coordonnee> m = new Maillon(c, null);
                     maListe.ajouterMaillon(m);
                 }
             }
