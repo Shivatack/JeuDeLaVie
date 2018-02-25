@@ -1,16 +1,19 @@
 package JeuDeLaVie;
 
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.Scanner;
 
 public class JeuDeLaVie {
 
     public static void main(String[] args) {
-
         Scanner sc = new Scanner(System.in);
 
         // AYOUB
-        Liste l = new Liste();
+         Liste l = new Liste();
         String fichier = "test.lif";
         try {
             l = GestionFichier.LireFichier(fichier);
@@ -18,11 +21,10 @@ public class JeuDeLaVie {
             e.printStackTrace();
             System.out.print(e.getMessage());
         }
-        if (!l.estVide()) {
-            System.out.print(l.toString());
-        }
-        int choix = 1;
 
+        test(l);
+
+        int choix = 1;
         while (choix == 1) {
             System.out.println("\nAvancer à la prochaine génération : 1\nStopper : 0");
             if (sc.hasNextInt()) {
@@ -67,4 +69,30 @@ public class JeuDeLaVie {
 
         }
     }
+
+    public static void test(Liste l) {
+
+        ActionListener al = new ActionListener() {
+            int i = 0;
+            Liste k = l;
+            public void actionPerformed(ActionEvent e) {
+                System.out.println(k.toString());
+                k = k.genSuivante();
+                System.out.println("Génération  = " + i);
+                i++;
+            }
+        };
+
+        Timer t = new Timer(1000, al);
+
+        t.start();
+
+        try {
+            System.in.read();
+        }
+        catch (IOException e){}
+
+        t.stop();
+    }
+
 }
