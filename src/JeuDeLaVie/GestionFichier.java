@@ -65,7 +65,7 @@ public class GestionFichier {
                     //calcul = colonne + i;
                     //System.out.print(calcul + "***\n");
                     Coordonnee c = new Coordonnee((ligne + compteur), (colonne + i));
-                    Maillon<Coordonnee> m = new Maillon(c, null);
+                    Maillon m = new Maillon(c, null);
                     maListe.ajouterMaillon(m);
                 }
             }
