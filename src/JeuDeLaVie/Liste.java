@@ -1,12 +1,14 @@
 package JeuDeLaVie;
 
+import java.nio.file.Path;
+
 /**
  *
  */
-public class Liste{
+public class Liste<T> {
 
     // Attributs
-    private Maillon tete;
+    private Maillon<T> tete;
 
     // Constructeur
 
@@ -22,7 +24,7 @@ public class Liste{
      *
      * @param tete : maillon de tete
      */
-    public Liste(Maillon tete) {
+    public Liste(Maillon<T> tete) {
         this.tete = tete;
     }
 
@@ -33,7 +35,7 @@ public class Liste{
      *
      * @return : tete de la liste
      */
-    public Maillon getTete() {
+    public Maillon<T> getTete() {
         return tete;
     }
 
@@ -42,7 +44,7 @@ public class Liste{
      *
      * @param tete : nouvelle tete de liste
      */
-    public void setTete(Maillon tete) {
+    public void setTete(Maillon<T> tete) {
         this.tete = tete;
     }
 
@@ -52,7 +54,7 @@ public class Liste{
      *
      * @param m
      */
-    public void ajouterEnTete(Maillon m) {
+    public void ajouterEnTete(Maillon<T> m) {
         m.setSuivant(this.getTete());
         this.tete = m;
     }
@@ -77,7 +79,7 @@ public class Liste{
      * @return : la taille de la liste
      */
     public int taille() {
-        Maillon tmp = this.tete;
+        Maillon<T> tmp = this.tete;
         int taille = 0;
         while (tmp != null) {
             taille++;
@@ -86,131 +88,45 @@ public class Liste{
         return taille;
     }
 
-    //JULIETTE ET OZGUR LA BONNE
+    //JULIETTE ET OZGUR LA BONNE a tester
 
-    public void ajouterMaillon(Maillon m) {
+    public void ajouterMaillon(Maillon<T> m) {
         if(m.getInfo() instanceof Coordonnee) {
             if(this.estVide()) {
                 this.ajouterEnTete(m);
             } else {
-                Maillon tmp =this.getTete();
+                Maillon<Coordonnee> tmp = (Maillon<Coordonnee>) this.getTete();
+                Maillon<Coordonnee> mc = (Maillon<Coordonnee>) m;
 
-                if (m.getInfo().compareTo(tmp.getInfo()) == -1) {
+                if (!this.contient(m) && mc.getInfo().compareTo(tmp.getInfo()) == -1) {
                     this.ajouterEnTete(m);
                 } else {
                     if (tmp.getSuivant() != null) {
-                        while ((tmp.getSuivant() != null) && m.getInfo().compareTo(tmp.getSuivant().getInfo()) == 1) {
+                        while ((tmp.getSuivant() != null) && mc.getInfo().compareTo(tmp.getSuivant().getInfo()) == 1) {
                             tmp = tmp.getSuivant();
                         }
                     }
-                    /*if (tmp.getSuivant() != null && mc.getInfo().compareTo(tmp.getSuivant().getInfo()) != 0) {
+                    if (!this.contient(m)) {
                         mc.setSuivant(tmp.getSuivant());
                         tmp.setSuivant(mc);
-                    }*/
-                    m.setSuivant(tmp.getSuivant());
-                    tmp.setSuivant(m);
+                    }
                 }
             }
         } else {
             this.ajouterEnTete(m);
         }
-        this.supprimerDoublons();
     }
 
-    public void supprimerDoublons() {
-        Maillon m = this.getTete();
-        Maillon suiv = m.getSuivant();
-
-        while (suiv != null) {
-            while (suiv != null && m.getInfo().compareTo(suiv.getInfo()) == 0) {
-                m.setSuivant(suiv.getSuivant());
-                suiv = suiv.getSuivant();
-            }
-            m = m.getSuivant();
-            if (suiv != null) {
-                suiv = suiv.getSuivant();
-            }
-        }
-    }
-
-    //Uzay
-
-    /**
-     *
-     * @return : la plus petite colonne
-     */
-    public int minColonne(){
-        if(estVide()){
-            return 0;
-        }else{
-            int c;
-            Maillon m=getTete();
-            c=(m.getInfo()).getColonne();
-            m=m.getSuivant();
-            while (m!=null){
-                if((m.getInfo()).getColonne()<c){
-                    c=(m.getInfo()).getColonne();
+    public boolean contient(Maillon<T> m) {
+        if(this.estVide()) return false;
+            Maillon<T> tmp = this.getTete();
+            while (tmp != null) {
+                if (tmp.getInfo().equals(m.getInfo())) {
+                    return true;
                 }
-                m=m.getSuivant();
+                tmp = tmp.getSuivant();
             }
-            return c;
-        }
-    }
-
-    //Uzay
-
-    /**
-     *
-     * @return : la plus petite ligne
-     */
-    public int minLigne(){
-        if(estVide()){
-            return 0;
-        }else{
-            return (getTete().getInfo()).getLigne();
-        }
-    }
-
-    //Uzay
-
-    /**
-     *
-     * @return : la plus grande colonne
-     */
-    public int maxColonne(){
-        if(estVide()){
-            return 0;
-        }else{
-            int c;
-            Maillon m=getTete();
-            c=(m.getInfo()).getColonne();
-            m=m.getSuivant();
-            while (m!=null){
-                if((m.getInfo()).getColonne()>c){
-                    c=(m.getInfo()).getColonne();
-                }
-                m=m.getSuivant();
-            }
-            return c;
-        }
-    }
-
-    //Uzay
-
-    /**
-     *
-     * @return : la plus grande ligne
-     */
-    public int maxLigne(){
-        if (estVide()){
-            return 0;
-        }else{
-            Maillon tmp = getTete();
-            while(tmp.getSuivant()!=null){
-                tmp=tmp.getSuivant();
-            }
-            return (tmp.getInfo()).getLigne();
-        }
+        return false;
     }
 
     //Ozgur
@@ -223,12 +139,19 @@ public class Liste{
     public String toString() {
         String s = "";
         if (!this.estVide()) {
-            Maillon tmp = this.getTete();
-            tmp = this.getTete();
-            int minL = this.minLigne();
-            int minC = this.minColonne();
-            int maxL = this.maxLigne();
-            int maxC = this.maxColonne();
+            Maillon<Coordonnee> tmp = (Maillon<Coordonnee>) this.getTete();
+
+            //affichage des coordonnees
+            /*while (tmp != null) {
+                s += "(" + tmp.getInfo().getLigne() + ";" + tmp.getInfo().getColonne() + ")\n";
+                tmp = tmp.getSuivant();
+            }*/
+
+            tmp = (Maillon<Coordonnee>) this.getTete();
+            int minL = JeuDeLaVie.minLigne(this);
+            int minC = JeuDeLaVie.minColonne(this);
+            int maxL = JeuDeLaVie.maxLigne(this);
+            int maxC = JeuDeLaVie.maxColonne(this);
             for (int l = minL; l <= maxL; l++){
                 for (int c = minC; c <= maxC; c++){
                     if (tmp != null) {
@@ -248,8 +171,17 @@ public class Liste{
         return s;
     }
 
-    public void afficherListe(Liste l) {
-        Maillon m = l.getTete();
+    public void afficherListeLp(Liste lp) {
+        Maillon<Path> m = lp.getTete();
+        while (m.getSuivant() != null) {
+            System.out.print(m.toString() + "\n");
+            m = m.getSuivant();
+        }
+        System.out.print(m.toString() + "\n");
+    }
+
+    public void afficherListe(Liste<Coordonnee> l) {
+        Maillon<Coordonnee> m = l.getTete();
         while (m.getSuivant() != null) {
             System.out.print(m.toString() + "\n");
             m = m.getSuivant();
@@ -264,11 +196,11 @@ public class Liste{
      *
      * @param m : maillon a supprimer
      */
-    public void supprimerMaillon(Maillon m){
+    public void supprimerMaillon(Maillon<T> m){
         if (tete.equals(m)) {
             tete = tete.getSuivant();
         } else {
-            Maillon tmp = tete;
+            Maillon <T>tmp = tete;
             while (!(tmp.getSuivant() == null)) {
                 if (tmp.getSuivant().equals(m)) {
                     tmp.setSuivant(tmp.getSuivant().getSuivant());
@@ -276,62 +208,5 @@ public class Liste{
                 } else tmp = tmp.getSuivant();
             }
         }
-    }
-
-    public boolean contient(Maillon m) {
-        Maillon tmp =this.getTete();
-        while (tmp != null) {
-            if (tmp.getInfo().compareTo(m.getInfo()) == 0) {
-                return true;
-            } else {
-                if (tmp.getInfo().compareTo(m.getInfo()) == 1) {
-                    return false;
-                }
-            }
-            tmp = tmp.getSuivant();
-        }
-        return false;
-    }
-
-    public Liste genSuivante() {
-        Liste newListe = new Liste();
-        int newMinLigne=minLigne()-1;
-        int newMaxLigne=maxLigne()+1;
-        int newMinColonne=minColonne()-1;
-        int newMaxColonne=maxColonne()+1;
-        for(int i=newMinLigne; i<=newMaxLigne; i++){
-            for(int j=newMinColonne; j<=newMaxColonne; j++){
-                Coordonnee c=new Coordonnee(i,j);
-                Maillon m=new Maillon(c,null);
-                if(contient(m)){
-                    if ((nbVoisins(m)==2) || (nbVoisins(m) ==3)){
-                        newListe.ajouterMaillon(m);
-                    }
-                }else{
-                    if (nbVoisins(m)==3){
-                        newListe.ajouterMaillon(m);
-                    }
-                }
-            }
-        }
-        return newListe;
-    }
-
-    public int nbVoisins(Maillon tmplc) {
-
-        int l = tmplc.getInfo().getLigne();
-        int c = tmplc.getInfo().getColonne();
-        int nombreVoisins = 0;
-
-        for (int i = -1; i < 2; i++) {
-            for (int j = -1; j < 2; j++) {
-                Maillon mc = new Maillon(new Coordonnee(l+i, c+j), null);
-                if (this.contient(mc) && mc.getInfo().compareTo(tmplc.getInfo()) != 0) {
-                    nombreVoisins++;
-                }
-            }
-        }
-
-        return nombreVoisins;
     }
 }

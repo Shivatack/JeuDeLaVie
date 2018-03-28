@@ -1,98 +1,123 @@
 package JeuDeLaVie;
 
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.io.IOException;
-import java.util.Scanner;
-
 public class JeuDeLaVie {
 
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
+    //Uzay
 
-        // AYOUB
-         Liste l = new Liste();
-        String fichier = "test.lif";
-        try {
-            l = GestionFichier.LireFichier(fichier);
-        } catch (IOException e) {
-            e.printStackTrace();
-            System.out.print(e.getMessage());
+    /**
+     * @return : la plus petite colonne
+     */
+    public static int minColonne(Liste t) {
+        if (t.estVide()) {
+            return 0;
+        } else {
+            int c;
+            Maillon<Coordonnee> m = t.getTete();
+            c = ((Coordonnee) m.getInfo()).getColonne();
+            m = m.getSuivant();
+            while (m != null) {
+                if (((Coordonnee) m.getInfo()).getColonne() < c) {
+                    c = ((Coordonnee) m.getInfo()).getColonne();
+                }
+                m = m.getSuivant();
+            }
+            return c;
         }
+    }
 
-        test(l);
+    //Uzay
 
-        int choix = 1;
-        while (choix == 1) {
-            System.out.println("\nAvancer à la prochaine génération : 1\nStopper : 0");
-            if (sc.hasNextInt()) {
-                choix = sc.nextInt();
-                if (choix == 1) {
-                    System.out.println("\nPROCHAINE GENERATION !");
-                    l = l.genSuivante();
-                    if (!l.estVide()) {
-                        System.out.print(l.toString());
-                    } else {
-                        System.out.println("\nGENERATION MORTE !");
-                        break;
+    /**
+     * @return : la plus petite ligne
+     */
+    public static int minLigne(Liste t) {
+        if (t.estVide()) {
+            return 0;
+        } else {
+            return ((Coordonnee) t.getTete().getInfo()).getLigne();
+        }
+    }
+
+    //Uzay
+
+    /**
+     * @return : la plus grande colonne
+     */
+    public static int maxColonne(Liste t) {
+        if (t.estVide()) {
+            return 0;
+        } else {
+            int c;
+            Maillon<Coordonnee> m = t.getTete();
+            c = ((Coordonnee) m.getInfo()).getColonne();
+            m = m.getSuivant();
+            while (m != null) {
+                if (((Coordonnee) m.getInfo()).getColonne() > c) {
+                    c = ((Coordonnee) m.getInfo()).getColonne();
+                }
+                m = m.getSuivant();
+            }
+            return c;
+        }
+    }
+
+    //Uzay
+
+    /**
+     * @return : la plus grande ligne
+     */
+    public static int maxLigne(Liste t) {
+        if (t.estVide()) {
+            return 0;
+        } else {
+            Maillon<Coordonnee> tmp = t.getTete();
+            while (tmp.getSuivant() != null) {
+                tmp = tmp.getSuivant();
+            }
+            return ((Coordonnee) tmp.getInfo()).getLigne();
+        }
+    }
+
+    /*public static Liste<Coordonnee> genSuivante(Liste t) {
+
+        Liste newListe = new Liste();
+        int newMinLigne = minLigne(t) - 1;
+        int newMaxLigne = maxLigne(t) + 1;
+        int newMinColonne = minColonne(t) - 1;
+        int newMaxColonne = maxColonne(t) + 1;
+        for (int i = newMinLigne; i <= newMaxLigne; i++) {
+            for (int j = newMinColonne; j <= newMaxColonne; j++) {
+                Coordonnee c = new Coordonnee(i, j);
+                Maillon<Coordonnee> m = new Maillon<Coordonnee>(c, null);
+                if (t.contient(m)) {
+                    if ((nbVoisins(m, t) == 2) || (nbVoisins(m, t) == 3)) {
+                        newListe.ajouterMaillon(m);
                     }
                 } else {
-                    if (choix == 0) {
-                        System.out.println("\nSTOP !");
-                    } else {
-                        choix = 1;
-                        System.out.println("\nJ'ai pas compris wallah...");
+                    if (nbVoisins(m, t) == 3) {
+                        newListe.ajouterMaillon(m);
                     }
                 }
-            } else {
-                sc.nextLine();
-                System.err.println("\nSaisissez un entier !");
             }
         }
+        return newListe;
+    }
 
-        // JULIETTE
-        if (args.length != 1 && args.length != 3) { //else
-            System.out.println("Veuillez saisir une commande valide. \n java -jar Perso.jar -h : rappelle la liste des options du programme ");
-        }
-        if (args.length == 1) {
-            if (args[1] == "-name") {
-                System.out.println("Azaroual Ayoub \n Douare Juliette \n Sağ Özgür \n Sağ Uzay");
-                if (args[1] == "-h") {
-                    System.out.println("• java -jar Perso.jar -name affiche vos noms et prénoms " +
-                            "\n• java -jar Perso.jar -s d fichier.lif exécute une simulation du jeu d’une durée d affichant les configurations du jeu avec le numéro de génération." +
-                            "\n • java -jar Perso.jar -c max fichier.lif calcule le type d’évolution du jeu avec ses caractéristiques (taille de la queue, période et déplacement); max représente la durée maximale de simulation pour déduire les résultats du calcul." +
-                            "\n• java -jar Perso.jar -w max dossier calcule le type d’évolution de tous les jeux contenus dans le dossier passé en paramètre et affiche les résultats sous la forme d’un fichier html.)");
+    public static int nbVoisins(Maillon<Coordonnee> tmplc, Liste t) {
+
+        int l = tmplc.getInfo().getLigne();
+        int c = tmplc.getInfo().getColonne();
+        int nombreVoisins = 0;
+
+        for (int i = -1; i < 2; i++) {
+            for (int j = -1; j < 2; j++) {
+                Maillon<Coordonnee> mc = new Maillon<Coordonnee>(new Coordonnee(l + i, c + j), null);
+                if (t.contient(mc) && mc.getInfo().compareTo(tmplc.getInfo()) != 0) {
+                    nombreVoisins++;
                 }
             }
-
         }
-    }
 
-    public static void test(Liste l) {
-
-        ActionListener al = new ActionListener() {
-            int i = 0;
-            Liste k = l;
-            public void actionPerformed(ActionEvent e) {
-                System.out.println(k.toString());
-                k = k.genSuivante();
-                System.out.println("Génération  = " + i);
-                i++;
-            }
-        };
-
-        Timer t = new Timer(1000, al);
-
-        t.start();
-
-        try {
-            System.in.read();
-        }
-        catch (IOException e){}
-
-        t.stop();
-    }
-
+        return nombreVoisins;
+    }*/
 }

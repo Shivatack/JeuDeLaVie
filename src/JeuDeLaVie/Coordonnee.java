@@ -8,8 +8,16 @@ public class Coordonnee implements Comparable<Coordonnee> {
     // Attributs
     private int ligne;
     private int colonne;
+    private int voisin;
 
-    // Constructeur
+    public int getVoisin() {
+        return voisin;
+    }
+
+    public void setVoisin(int voisin) {
+        this.voisin = voisin;
+    }
+// Constructeur
 
     /**
      * Constructeur des coordonnees
@@ -17,9 +25,10 @@ public class Coordonnee implements Comparable<Coordonnee> {
      * @param : ligne
      * @param : colonne
      */
-    public Coordonnee(int ligne, int colonne) {
+    public Coordonnee(int ligne, int colonne, int voisin) {
         this.ligne = ligne;
         this.colonne = colonne;
+        this.voisin = voisin;
     }
 
     // Methodes
@@ -61,13 +70,13 @@ public class Coordonnee implements Comparable<Coordonnee> {
      * @return : 1 si supérieur, 0 si égal et -1 si inférieur
      */
     public int compareTo(Coordonnee c) {
-            if (this.ligne < c.ligne) return -1;
-            if (this.ligne > c.ligne) return 1;
-            if (this.ligne == c.ligne) {
-                if (this.colonne < c.colonne) return -1;
-                if (this.colonne > c.colonne) return 1;
-                if (this.colonne == c.colonne) return 0;
-            }
+        if (this.ligne < c.ligne) return -1;
+        if (this.ligne > c.ligne) return 1;
+        if (this.ligne == c.ligne) {
+            if (this.colonne < c.colonne) return -1;
+            if (this.colonne > c.colonne) return 1;
+            if (this.colonne == c.colonne) return 0;
+        }
         return -2;
     }
 
@@ -93,12 +102,7 @@ public class Coordonnee implements Comparable<Coordonnee> {
      */
     @Override
     public String toString() {
-        return "["+ this.ligne +
-                "," + this.colonne + "]";
-    }
-
-    public Coordonnee distanceCoordonnee(Coordonnee c){
-        Coordonnee vecteur = new Coordonnee(this.ligne+c.getLigne(),this.colonne+c.getColonne());
-        return vecteur;
+        return "[" + this.ligne +
+                "," + this.colonne + "]" + "\nNombre de voisins : " + this.voisin;
     }
 }

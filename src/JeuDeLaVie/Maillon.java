@@ -3,10 +3,10 @@ package JeuDeLaVie;
 /**
  *
  */
-public class Maillon {
+public class Maillon<T> {
 
     // Attributs
-    private Coordonnee info;
+    private T info;
     private Maillon suivant;
 
     // Constructeur
@@ -16,9 +16,9 @@ public class Maillon {
      * @param suivant : Maillon suivant
      * @param info : Coordonnee
      */
-    public Maillon(Coordonnee info, Maillon suivant) {
-        this.info = info;
+    public Maillon(T info, Maillon<T> suivant) {
         this.suivant = suivant;
+        this.info = info;
     }
 
     /** Constructeur vide du maillon
@@ -35,7 +35,7 @@ public class Maillon {
      *
      * @return maillon.suivant : Champ suivant du maillon
      */
-    public Maillon getSuivant() {
+    public Maillon<T> getSuivant() {
         return suivant;
     }
 
@@ -51,7 +51,7 @@ public class Maillon {
      *
      * @return objet du champ info
      */
-    public Coordonnee getInfo() {
+    public T getInfo() {
         return info;
     }
 
@@ -59,7 +59,7 @@ public class Maillon {
      *
      * @param info : Objet à affecter
      */
-    public void setInfo(Coordonnee info) {
+    public void setInfo(T info) {
         this.info = info;
     }
 
@@ -84,6 +84,8 @@ public class Maillon {
      */
     @Override
     public String toString() {
-        return "" + this.getInfo();
+        return "" + this.getInfo().toString();
     }
+
+
 }
