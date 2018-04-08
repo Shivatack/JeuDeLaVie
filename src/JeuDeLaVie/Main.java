@@ -14,23 +14,21 @@ public class Main {
         Object[] o = Controleur.saisies(args);
         if (o != null) {
             if ((Integer) o[0] == 3) {
-
-                File d = (File) o[3];
-
-                //java -jar JeuDeLaVie.jar -w max dossier calcule le type d’évolution de tous les
-                //    jeux contenus dans le dossier passé en paramètre et affiche les résultats sous la forme d’un fichier
-                //    html.
-                //(o[1], d);
+                String s = "";
+                try {
+                    s = GestionFichier.fichier((String) o[3]);
+                    s = traiterFich((Integer) o[1], s, (Integer) o[4]);
+                    eFGen(s);
+                    System.out.println("\nFIN DE TRAITEMENT\n");
+                } catch(IOException e) {
+                    System.out.println(e.getMessage());
+                }
             } else {
                 if ((Integer) o[0] == 1) {
-                    //java -jar JeuDeLaVie.jar -s d fichier.lif exécute une simulation du jeu
-                    CalculGen.simulation((int)o[1], (Liste<Coordonnee>) o[2]);
+                    test((int) o[1], (String) o[3], (int) o[4]);
                 }
                 if ((Integer) o[0] == 2) {
-                    //java -jar JeuDeLaVie.jar -c max fichier.lif calcule le type d’évolution du
-                    //    jeu avec ses caractéristiques (taille de la queue, période et déplacement); max représente la durée
-                    //    maximale de simulation pour déduire les résultats du calcul.
-                    //(t[2], l);
+                    System.out.println(calculTQP((int) o[1], (String) o[3], (int) o[4]));
                 }
             }
         }
@@ -73,9 +71,31 @@ public class Main {
     }
 
     //NEW
+    private static String traiterFich(int max, String fichiers , int monde){
+        Scanner sc = new Scanner (fichiers);
+        String stat="<!DOCTYPE html><html lang=\"fr\"><head><title>D.A.S.S.</title><meta charset=\"utf-8\"></head><body><div>";
+        String nomFich="";
+        sc.useDelimiter("\n");
+        System.out.println();
+        while(sc.hasNext()){
+            nomFich=sc.next();
+            System.out.println("Calcul du fichier : " + nomFich);
+            stat+="<Fieldset><Legend>Nom du fichier : " +nomFich +"</Legend><p>";
+            stat+=calculTQP(max,nomFich,monde);
+            stat+="</p></Fieldset>";
+        }
+        stat+="</div></body></html>";
+        return stat;
+    }
 
-    public static String statFich(String nomFich,int max){
-        Liste<Coordonnee> l =new Liste<Coordonnee>();
+    public static String calculDep(Coordonnee c, Coordonnee k){
+        int ligne=c.getLigne()-k.getLigne();
+        int col=c.getColonne()-k.getColonne();
+        return "("+ligne+";"+col+")";
+    }
+
+    public static Object[] typeEvolution(String nomFich, int max, int monde){
+        Liste<Coordonnee> l = new Liste<Coordonnee>();
         try {
             l = GestionFichier.LireFichier(nomFich);
         } catch (IOException e) {
@@ -83,37 +103,59 @@ public class Main {
             System.out.print(e.getMessage());
         }
         String forme=null;
-        String etat="<Fieldset><Legend>Nom Du Fichier :" +nomFich +"</Legend><p>";
         int i = 0;
         Liste<Coordonnee> liste1 = l;
         Liste<Coordonnee> liste2 = l;
         Liste<Coordonnee> liste1Bis = l;
         while(forme==null && i<max){
-            liste1 = CalculGen.simulation(1, liste1);
-            liste1Bis = CalculGen.simulation(1, liste1);
-            liste2 = CalculGen.simulation(2, liste2);
+            liste1 = CalculGen.simulation(1, liste1, monde);
+            liste1Bis = CalculGen.simulation(1, liste1, monde);
+            liste2 = CalculGen.simulation(2, liste2, monde);
             forme = verificationForme(liste1,liste1Bis,liste2);
             i++;
         }
-        if(i<max){
-            etat+= "Nombre de generation : " +(i+1) +" Forme detectee : " +forme +"</p></Fieldset>" +"\n";
-        }else {
-            etat+= "Nombre de generation atteint : " +i +" Il n'y a pas de Forme detectee." +"</p></Fieldset>" +"\n";
-        }
-        return etat;
+        return new Object[]{forme,liste1,l};
     }
 
-    private static String traiterFich(int max, String fichiers){
-        Scanner sc = new Scanner (fichiers);
-        String stat="<!DOCTYPE html><html lang=\"fr\"><head><title>D.A.S.S.</title><meta charset=\"utf-8\"></head><body><div>";
-        String nomFich="";
-        sc.useDelimiter("\n");
-        while(sc.hasNext()){
-            nomFich=sc.next();
-            stat+=statFich(nomFich,max);
+    public static String calculTQP(int max,String nomFich , int monde){
+        Object[] o1=typeEvolution(nomFich,max,monde);
+        String etat="";
+        String forme=(String) o1[0];
+        if(forme != null){
+            Liste<Coordonnee> listeTest =(Liste<Coordonnee>) o1[1];
+            Liste<Coordonnee> listeInit = (Liste<Coordonnee>) o1[2];
+            Boolean arret = false;
+            int periode = 1;
+            Liste<Coordonnee> listeTest2 = CalculGen.simulation(1, listeTest,monde);
+            while (!arret){
+                if (listeTest.toString().equals(listeTest2.toString())) {
+                    arret=true;
+                } else {
+                    periode++;
+                    listeTest2 = CalculGen.simulation(1, listeTest2,monde);
+                }
+            }
+            arret = false;
+            listeTest = CalculGen.simulation(periode,listeInit,monde);
+            int queue=0;
+            while(!arret){
+                if (listeTest.toString().equals(listeInit.toString())) {
+                    arret=true;
+                } else {
+                    queue++;
+                    listeTest = CalculGen.simulation(1, listeTest,monde);
+                    listeInit = CalculGen.simulation(1, listeInit,monde);
+                }
+            }
+            String dep = "";
+            if (!listeInit.estVide() && !listeTest.estVide()) { // JAI AJOUTE CA CEST BON ?????????!!!!!!!!!! A CAUSE DU MONDE FINI Y A UNE LISTE QUI EST VIDE
+                dep = calculDep(listeInit.getTete().getInfo(), listeTest.getTete().getInfo());
+            }
+            etat += "Forme : " +forme +".<br />Taille de la queue : "+ queue +".<br />Periode : "+periode +".<br />Le vecteur de deplacement est : "+dep+".";
+        } else {
+            etat+="Aucun information n'est disponible sur le fichier avec le maximum " + max + ".";
         }
-        stat+="</div></body></html>";
-        return stat;
+        return etat;
     }
 
     public static String verificationForme(Liste<Coordonnee> liste1,Liste<Coordonnee> liste1Bis, Liste<Coordonnee> liste2){
@@ -142,7 +184,7 @@ public class Main {
         out.close();
     }
 
-    public static void test(int max, String fich) {
+    public static void test(int max, String fich, int monde) {
 
         Liste<Coordonnee> l =new Liste<Coordonnee>();
         try {
@@ -162,12 +204,9 @@ public class Main {
                 i++;
                 System.out.print(liste1.toString());
                 System.out.println("Génération  = " + i +"\n");
-                liste1 = CalculGen.simulation(1, liste1);
-                liste1Bis = CalculGen.simulation(1, liste1);
-                liste2 = CalculGen.simulation(2, liste2);
-                if(verificationForme(liste1,liste1Bis,liste2) != null){
-                    System.out.println(verificationForme(liste1,liste1Bis,liste2));
-                }
+                liste1 = CalculGen.simulation(1, liste1, monde);
+                liste1Bis = CalculGen.simulation(1, liste1, monde);
+                liste2 = CalculGen.simulation(2, liste2, monde);
                 if (i==max) {
                     System.exit(0);
                 }
@@ -175,7 +214,7 @@ public class Main {
 
         };
 
-        Timer t = new Timer(1000, al);
+        Timer t = new Timer(2000, al);
 
         t.start();
 

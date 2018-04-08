@@ -78,46 +78,5 @@ public class JeuDeLaVie {
         }
     }
 
-    /*public static Liste<Coordonnee> genSuivante(Liste t) {
 
-        Liste newListe = new Liste();
-        int newMinLigne = minLigne(t) - 1;
-        int newMaxLigne = maxLigne(t) + 1;
-        int newMinColonne = minColonne(t) - 1;
-        int newMaxColonne = maxColonne(t) + 1;
-        for (int i = newMinLigne; i <= newMaxLigne; i++) {
-            for (int j = newMinColonne; j <= newMaxColonne; j++) {
-                Coordonnee c = new Coordonnee(i, j);
-                Maillon<Coordonnee> m = new Maillon<Coordonnee>(c, null);
-                if (t.contient(m)) {
-                    if ((nbVoisins(m, t) == 2) || (nbVoisins(m, t) == 3)) {
-                        newListe.ajouterMaillon(m);
-                    }
-                } else {
-                    if (nbVoisins(m, t) == 3) {
-                        newListe.ajouterMaillon(m);
-                    }
-                }
-            }
-        }
-        return newListe;
-    }
-
-    public static int nbVoisins(Maillon<Coordonnee> tmplc, Liste t) {
-
-        int l = tmplc.getInfo().getLigne();
-        int c = tmplc.getInfo().getColonne();
-        int nombreVoisins = 0;
-
-        for (int i = -1; i < 2; i++) {
-            for (int j = -1; j < 2; j++) {
-                Maillon<Coordonnee> mc = new Maillon<Coordonnee>(new Coordonnee(l + i, c + j), null);
-                if (t.contient(mc) && mc.getInfo().compareTo(tmplc.getInfo()) != 0) {
-                    nombreVoisins++;
-                }
-            }
-        }
-
-        return nombreVoisins;
-    }*/
 }

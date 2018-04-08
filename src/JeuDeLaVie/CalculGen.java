@@ -1,7 +1,5 @@
 package JeuDeLaVie;
 
-import com.sun.org.apache.xpath.internal.SourceTree;
-
 public class CalculGen {
 
     // Juliette et Ayoub
@@ -76,23 +74,16 @@ public class CalculGen {
         return v;
     }
 
-    public static Liste<Coordonnee> simulation(int d, Liste<Coordonnee> l,int monde){
+    public static Liste<Coordonnee> simulation(int d, Liste<Coordonnee> l, int monde){
         int compteur = 0;
         Liste<Coordonnee> v;
         int plin=JeuDeLaVie.minLigne(l);
-        System.out.println(plin);
         int glin=JeuDeLaVie.maxLigne(l);
-        System.out.println(glin);
         int pcol=JeuDeLaVie.minColonne(l);
-        System.out.println(pcol);
         int gcol=JeuDeLaVie.maxColonne(l);
-        System.out.println(gcol);
         while (compteur != d){
-            System.out.println(l.toString());
-            System.out.println("\n Génération n° "+compteur);
             compteur++;
             v = listeVoisins(l,monde,plin,pcol,glin,gcol);
-            System.out.println("###################");
             l = genSuivante(v, l);
         }
         return l;
