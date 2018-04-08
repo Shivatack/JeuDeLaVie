@@ -8,87 +8,32 @@ import java.util.Scanner;
 
 public class Main {
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
 
-        /*String s = GestionFichier.fichier("C:\\Users\\Anonymous\\Desktop\\Cours L2 Info\\S4\\Projet\\JeuDeLaVie\\out\\artifacts\\JeuDeLaVie_jar");
-        String t = traiterFich(15, s);
-        System.out.println(t);
-        eFGen(t);*/
+        Object[] o = Controleur.saisies(args);
+        if (o != null) {
+            if ((Integer) o[0] == 3) {
 
-        test(10, "test.LIF");
+                File d = (File) o[3];
 
-        // JULIETTE
-        /*if (args.length == 1 || args.length == 3) { //else
-            if (args.length == 1) {
-                if (args[0].equals("-name")) {
-                    System.out.println("Azaroual Ayoub \n Douare Juliette \n Sag Özgür \n Sag Uzay");
-                } else {
-                    if (args[0].equals("-h")) {
-                        System.out.println("• java -jar JeuDeLaVie.jar -name affiche vos noms et prénoms " +
-                                "\n• java -jar JeuDeLaVie.jar -s d fichier.lif exécute une simulation du jeu d’une durée d affichant les configurations du jeu avec le numéro de génération." +
-                                "\n • java -jar JeuDeLaVie.jar -c max fichier.lif calcule le type d’évolution du jeu avec ses caractéristiques (taille de la queue, période et déplacement); max représente la durée maximale de simulation pour déduire les résultats du calcul." +
-                                "\n• java -jar JeuDeLaVie.jar -w max dossier calcule le type d’évolution de tous les jeux contenus dans le dossier passé en paramètre et affiche les résultats sous la forme d’un fichier html.)");
-                    } else {
-                        System.out.println("Veuillez saisir une commande valide. \n java -jar JeuDeLaVie.jar -h : rappelle la liste des options du programme ");
-                    }
-                }
-
+                //java -jar JeuDeLaVie.jar -w max dossier calcule le type d’évolution de tous les
+                //    jeux contenus dans le dossier passé en paramètre et affiche les résultats sous la forme d’un fichier
+                //    html.
+                //(o[1], d);
             } else {
-                if (args[0].equals("-s")) {
-                    try {
-                        if (Integer.parseInt(args[1]) > 0) {
-                            if (existe(args[2])) {
-                                try {
-                                    Liste l = GestionFichier.LireFichier(args[2]);
-                                    CalculGen.simulation(Integer.parseInt(args[1]), l);
-                                } catch (Exception e) {
-                                    System.out.println(e.getMessage());
-                                }
-                            } else {
-                                System.out.println("Fichier inexistant.");
-                            }
-                        } else {
-                            System.out.println("Veuillez saisir un entier strictement supérieur à 0.");
-                        }
-                    } catch (Exception e) {
-                        System.out.println("Veuillez saisir un entier strictement supérieur à 0 en deuxième paramètre.");
-                    }
-
-
-                } else {
-
-                    if (args[0].equals("-c")) { //else
-                        if (estEntier(args[1])) {
-                            if (existe(args[2])) {
-                                // evolution(Integer.parseInt(args[1]),args[2]);
-                            } else {
-                                System.out.println("Fichier inexistant.");
-                            }
-                        } else {
-                            System.out.println("Veuillez saisir une commande valide. \n java -jar JeuDeLaVie.jar -h : rappelle la liste des options du programme ");
-                        }
-
-                    } else {
-                        if (args[0].equals("-w")) {
-                            if (estEntier(args[1])) {
-                                if (f.isDirectory()) {
-
-                                } else {
-                                    System.out.println("Dossier inexistant.");
-                                }
-                                int a = Integer.parseInt(args[2]);
-                                String s = traiterFich(a, args[2]);
-                                eFGen(s);
-                            } else {
-                                System.out.println("Veuillez saisir une commande valide. \n java -jar JeuDeLaVie.jar -h : rappelle la liste des options du programme ");
-                            }
-                        } else {
-                            System.out.println("Veuillez saisir une commande valide. \n java -jar JeuDeLaVie.jar -h : rappelle la liste des options du programme ");
-                        }
-                    }
+                if ((Integer) o[0] == 1) {
+                    //java -jar JeuDeLaVie.jar -s d fichier.lif exécute une simulation du jeu
+                    CalculGen.simulation((int)o[1], (Liste<Coordonnee>) o[2]);
+                }
+                if ((Integer) o[0] == 2) {
+                    //java -jar JeuDeLaVie.jar -c max fichier.lif calcule le type d’évolution du
+                    //    jeu avec ses caractéristiques (taille de la queue, période et déplacement); max représente la durée
+                    //    maximale de simulation pour déduire les résultats du calcul.
+                    //(t[2], l);
                 }
             }
-        }*/
+        }
     }
 
     //Juliette
