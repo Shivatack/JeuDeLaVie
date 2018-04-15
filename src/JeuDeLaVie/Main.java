@@ -185,7 +185,6 @@ public class Main {
     }
 
     public static void test(int max, String fich, int monde) {
-
         Liste<Coordonnee> l =new Liste<Coordonnee>();
         try {
             l = GestionFichier.LireFichier(fich);
@@ -197,32 +196,22 @@ public class Main {
         ActionListener al = new ActionListener() {
             int i = 0;
             Liste<Coordonnee> liste1 = k;
-            Liste<Coordonnee> liste2 = k;
-            Liste<Coordonnee> liste1Bis = k;
-
             public void actionPerformed(ActionEvent e) {
                 i++;
                 System.out.print(liste1.toString());
                 System.out.println("Génération  = " + i +"\n");
                 liste1 = CalculGen.simulation(1, liste1, monde);
-                liste1Bis = CalculGen.simulation(1, liste1, monde);
-                liste2 = CalculGen.simulation(2, liste2, monde);
                 if (i==max) {
                     System.exit(0);
                 }
             }
-
         };
-
         Timer t = new Timer(2000, al);
-
         t.start();
-
         try {
             System.in.read();
         }
         catch (IOException e){}
-
         t.stop();
     }
 }

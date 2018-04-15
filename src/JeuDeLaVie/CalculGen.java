@@ -2,54 +2,63 @@ package JeuDeLaVie;
 
 public class CalculGen {
 
-    // Juliette et Ayoub
-
     /**
-     * Fonction qui incrémente le champ voisin de m dans l
+     * Fonction qui ajoute un maillon a 1 voisin (s'il n'est pas une cellule vivante) ou a 10 voisins (s'il est une cellule vivante) dans la liste de voisin.
+     * Si le maillon est déjà contenu dans la liste, on incrémente son champ voisin de 1 ou de 10.
      *
-     * @param : liste l
-     * @param : Maillon m
+     * @param v : liste de voisins contenant les maillons adjacents aux cellules vivantes contenues dans la liste initiale
+     * @param m : Maillon a ajouter ou auquel ajouter un voisin dans la liste v
+     * @param tmp : Maillon qui parcourt la liste initiale de cellules vivantes
      */
-    public static void ajouterUnVoisin(Liste<Coordonnee> v, Maillon<Coordonnee> m) {
-        Maillon<Coordonnee> tmp = v.getTete();
-        while (tmp != null) {
-            if (tmp.getInfo().equals(m.getInfo())) {
-                tmp.getInfo().setVoisin(tmp.getInfo().getVoisin() + 1);
-            }
-            tmp = tmp.getSuivant();
+    public static void ajouterVoisin(Liste<Coordonnee> v, Maillon<Coordonnee> m, Maillon<Coordonnee> tmp) {
+        Maillon<Coordonnee> p = v.getTete();//maillon de parcours
+        if (tmp.getInfo().compareTo(m.getInfo())==0) {
+            m.getInfo().setVoisin(10); // tous les maillons qui ont 10 ou plus dans leur champs voisin sont des maillons qui sont des cellules vivantes initialement
+        } else {
+            m.getInfo().setVoisin(1);
         }
+
+        if (!v.ajouterMaillon(m)) {
+             while (p != null) {
+                  if (p.getInfo().equals(m.getInfo())) {
+                      p.getInfo().setVoisin(p.getInfo().getVoisin() + m.getInfo().getVoisin());
+                  }
+        p = p.getSuivant();
     }
 
-    // Juliette et Ayoub
+    }
+
+
+    }
 
     /**
-     * Fonction qui prend une liste de voisins en paramètre et qui supprime ceux qui ne prendront pas vie
+     * Cette fonction supprime de la liste de voisin toutes les cellules qui meurent ou qui ne prendront pas vie. Elle renvoie donc la generation suivante de cellules vivantes.
      *
-     * @param : liste l
-     * @return : liste v de cellules vivantes
+     * @param v : liste de voisins contenant les maillons adjacents aux cellules vivantes contenues dans la liste initiale
+     * @return la liste de voisins contenant uniquement les cellules qui restent en vie ou qui prennent vie
      */
-    public static Liste genSuivante(Liste<Coordonnee> v, Liste<Coordonnee> l) {
+    public static Liste genSuivante(Liste<Coordonnee> v) { //13 : 3 voisins et initialement en vie, 12: 2 voisins et initialement en vie, 3 : 3 voisins -> doit naitre
         Maillon<Coordonnee> tmp = v.getTete();
         while (tmp != null) {
-            if (tmp.getInfo().getVoisin() != 3) {
-                if (tmp.getInfo().getVoisin() != 2) {
-                    v.supprimerMaillon(tmp);
-                } else {
-                    if (!l.contient(tmp)) {
-                        v.supprimerMaillon(tmp);
-                    }
-                }
+            if (tmp.getInfo().getVoisin() != 3 && tmp.getInfo().getVoisin() != 13 && tmp.getInfo().getVoisin() != 12) {
+                v.supprimerMaillon(tmp);
             }
             tmp = tmp.getSuivant();
         }
         return v;
+
     }
 
-    public static Liste listeVoisins(Liste<Coordonnee> l , int monde , int plin  , int pcol , int glin , int gcol) {
 
+    /**
+     * Fonction qui prend une liste de cellules vivantes en paramètre et qui renvoie une liste de cases avec leur nombre de cellules vivantes adjacentes
+     *
+     * @param : liste l de cellules
+     * @return : liste v de nombre de voisins
+     */
+    public static Liste listeVoisins(Liste<Coordonnee> l , int monde , int plin  , int pcol , int glin , int gcol) { // recoit la liste l qui contient les cellules vivantes de la génération actuelle
         Liste<Coordonnee> v = new Liste<Coordonnee>(); // Liste de voisins a retourner
         Maillon<Coordonnee> tmp = l.getTete(); // Maillon servant a parcourir la liste l
-
         while (tmp != null) {
             int ligne = tmp.getInfo().getLigne();
             int colonne = tmp.getInfo().getColonne();
@@ -57,22 +66,19 @@ public class CalculGen {
             int[][] t =remplir_tabs(monde , ligne , colonne , plin , pcol , glin , gcol);
 
             for (int i : t[0]) {
-                for (int j : t[1]) {
+                for (int j : t[1]) { //on va bien jusque là
                     Coordonnee c = new Coordonnee(i, j, 1);
                     Maillon<Coordonnee> m = new Maillon<Coordonnee>(c, null);
-                    if (!tmp.getInfo().equals(m.getInfo())) { //bien
-                        if (v.contient(m)) {
-                            ajouterUnVoisin(v, m);
-                        } else {
-                            v.ajouterMaillon(m);
-                        }
-                    }
+                    ajouterVoisin(v, m, tmp);
                 }
             }
             tmp = tmp.getSuivant();
         }
+
         return v;
     }
+
+
 
     public static Liste<Coordonnee> simulation(int d, Liste<Coordonnee> l, int monde){
         int compteur = 0;
@@ -82,9 +88,10 @@ public class CalculGen {
         int pcol=JeuDeLaVie.minColonne(l);
         int gcol=JeuDeLaVie.maxColonne(l);
         while (compteur != d){
-            compteur++;
-            v = listeVoisins(l,monde,plin,pcol,glin,gcol);
-            l = genSuivante(v, l);
+            compteur=compteur+1;
+            v = listeVoisins(l,monde,plin-10,pcol-10,glin+10,gcol+10);
+            l = genSuivante(v);
+
         }
         return l;
     }

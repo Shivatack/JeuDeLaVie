@@ -88,18 +88,21 @@ public class Liste<T> {
         return taille;
     }
 
-    //JULIETTE ET OZGUR LA BONNE a tester
 
-    public void ajouterMaillon(Maillon<T> m) {
+
+
+    public boolean ajouterMaillon(Maillon<T> m) {
         if(m.getInfo() instanceof Coordonnee) {
             if(this.estVide()) {
                 this.ajouterEnTete(m);
+                return true;
             } else {
                 Maillon<Coordonnee> tmp = (Maillon<Coordonnee>) this.getTete();
                 Maillon<Coordonnee> mc = (Maillon<Coordonnee>) m;
 
                 if (!this.contient(m) && mc.getInfo().compareTo(tmp.getInfo()) == -1) {
                     this.ajouterEnTete(m);
+                    return true;
                 } else {
                     if (tmp.getSuivant() != null) {
                         while ((tmp.getSuivant() != null) && mc.getInfo().compareTo(tmp.getSuivant().getInfo()) == 1) {
@@ -109,12 +112,15 @@ public class Liste<T> {
                     if (!this.contient(m)) {
                         mc.setSuivant(tmp.getSuivant());
                         tmp.setSuivant(mc);
+                        return true;
                     }
                 }
             }
         } else {
             this.ajouterEnTete(m);
+            return true;
         }
+        return false;
     }
 
     public boolean contient(Maillon<T> m) {
