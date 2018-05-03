@@ -2,9 +2,6 @@ package JeuDeLaVie;
 
 import java.nio.file.Path;
 
-/**
- *
- */
 public class Liste<T> {
 
     // Attributs
@@ -48,30 +45,25 @@ public class Liste<T> {
         this.tete = tete;
     }
 
-    // Ayoub
     /**
      * Ajoute un maillon en debut de liste
      *
-     * @param m
+     * @param m : maillon à ajouter
      */
     public void ajouterEnTete(Maillon<T> m) {
         m.setSuivant(this.getTete());
         this.tete = m;
     }
 
-    // Ozgur
-
     /**
-     * Retourne vrai si la liste est vide faut sinon
+     * Retourne vrai si la liste est vide faux sinon
      *
-     * @return boolean
+     * @return : true si la liste est vide et faux sinon
      */
     public boolean estVide(){
         return this.tete == null;
     }
 
-
-    //Uzay
 
     /**
      * Retourne un entier correspondant a la taille de la liste
@@ -88,9 +80,12 @@ public class Liste<T> {
         return taille;
     }
 
-
-
-
+    /**
+     * Ajoute un maillon de sorte à ce que la liste reste triée
+     *
+     * @param m : maillon à ajouter
+     * @return : vrai si fait, faux sinon
+     */
     public boolean ajouterMaillon(Maillon<T> m) {
         if(m.getInfo() instanceof Coordonnee) {
             if(this.estVide()) {
@@ -123,6 +118,12 @@ public class Liste<T> {
         return false;
     }
 
+    /**
+     * Fonction qui permet de savoir si un maillon est contenu dans la liste appelante
+     *
+     * @param m : maillon dont on veut vérifier s'il est contenu
+     * @return : vrai si le maillon est contenu et faux sinon
+     */
     public boolean contient(Maillon<T> m) {
         if(this.estVide()) return false;
             Maillon<T> tmp = this.getTete();
@@ -135,7 +136,6 @@ public class Liste<T> {
         return false;
     }
 
-    //Ozgur
     /**
      * Retourne la liste sous forme de chaine de caracteres
      *
@@ -146,12 +146,6 @@ public class Liste<T> {
         String s = "";
         if (!this.estVide()) {
             Maillon<Coordonnee> tmp = (Maillon<Coordonnee>) this.getTete();
-
-            //affichage des coordonnees
-            /*while (tmp != null) {
-                s += "(" + tmp.getInfo().getLigne() + ";" + tmp.getInfo().getColonne() + ")\n";
-                tmp = tmp.getSuivant();
-            }*/
 
             tmp = (Maillon<Coordonnee>) this.getTete();
             int minL = JeuDeLaVie.minLigne(this);
@@ -176,26 +170,6 @@ public class Liste<T> {
         }
         return s;
     }
-
-    public void afficherListeLp(Liste lp) {
-        Maillon<Path> m = lp.getTete();
-        while (m.getSuivant() != null) {
-            System.out.print(m.toString() + "\n");
-            m = m.getSuivant();
-        }
-        System.out.print(m.toString() + "\n");
-    }
-
-    public void afficherListe(Liste<Coordonnee> l) {
-        Maillon<Coordonnee> m = l.getTete();
-        while (m.getSuivant() != null) {
-            System.out.print(m.toString() + "\n");
-            m = m.getSuivant();
-        }
-        System.out.print(m.toString() + "\n");
-    }
-
-    // Juliette
 
     /**
      * Supprime un maillon de la liste

@@ -18,8 +18,8 @@ public class GestionFichier {
     /**
      * Cette fonction renvoi la liste contenant les cellules vivantes lues à partir du fichier passé en paramètre
      *
-     * @param fichier : fichier lif
-     * @return Liste de cellules vivantes
+     * @param fichier : fichier lif à lire
+     * @return : Liste de cellules vivantes
      * @throws FileNotFoundException
      * @throws IOException
      */
@@ -87,6 +87,13 @@ public class GestionFichier {
         }
     }
 
+    /**
+     * Fonction qui permet la récupération des nom des fichiers lif se trouvant dans le dossier passé en paramètre
+     *
+     * @param dossier : Le chemin du dossier
+     * @return : Le nom des fichiers lif se trouvant dans le dossier passé en paramètre
+     * @throws IOException
+     */
     public static String fichier(String dossier) throws IOException {
         Liste<String> lp = new Liste();
         DirectoryStream<Path> d;

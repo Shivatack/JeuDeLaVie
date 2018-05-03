@@ -23,12 +23,9 @@ public class CalculGen {
                   if (p.getInfo().equals(m.getInfo())) {
                       p.getInfo().setVoisin(p.getInfo().getVoisin() + m.getInfo().getVoisin());
                   }
-        p = p.getSuivant();
-    }
-
-    }
-
-
+                  p = p.getSuivant();
+             }
+        }
     }
 
     /**
@@ -74,12 +71,16 @@ public class CalculGen {
             }
             tmp = tmp.getSuivant();
         }
-
         return v;
     }
 
-
-
+    /**
+     *
+     * @param d
+     * @param l
+     * @param monde
+     * @return
+     */
     public static Liste<Coordonnee> simulation(int d, Liste<Coordonnee> l, int monde){
         int compteur = 0;
         Liste<Coordonnee> v;

@@ -1,8 +1,5 @@
 package JeuDeLaVie;
 
-/**
- *
- */
 public class Coordonnee implements Comparable<Coordonnee> {
 
     // Attributs
@@ -10,14 +7,25 @@ public class Coordonnee implements Comparable<Coordonnee> {
     private int colonne;
     private int voisin;
 
+    /**
+     * Fonction qui retourne le nombre de voisins d'une cellule
+     *
+     * @return : Le nombre de voisins d'une cellule
+     */
     public int getVoisin() {
         return voisin;
     }
 
+    /**
+     * Fonction qui permet de définir le nombre de voisins d'une cellule
+     *
+     * @param voisin : Le nombre de voisins d'une cellule
+     */
     public void setVoisin(int voisin) {
         this.voisin = voisin;
     }
-// Constructeur
+
+    // Constructeur
 
     /**
      * Constructeur des coordonnees
@@ -34,30 +42,36 @@ public class Coordonnee implements Comparable<Coordonnee> {
     // Methodes
 
     /**
-     * @return : Retourne le numero de ligne
+     * Fonction qui permet de récupérer la ligne d'une coordonnée
+     *
+     * @return : Le numero de ligne
      */
     public int getLigne() {
         return ligne;
     }
 
     /**
-     * modification de la ligne
+     * Fonction qui permet d'attribuer une ligne à une coordonnée
      *
-     * @param : ligne
+     * @param ligne : la ligne de la coordonnée
      */
     public void setLigne(int ligne) {
         this.ligne = ligne;
     }
 
     /**
-     * @return : Retourne le numero de colonne
+     * Fonction qui permet de récupérer la colonne d'une coordonnée
+     *
+     * @return : Le numero de colonne
      */
     public int getColonne() {
         return colonne;
     }
 
     /**
-     * @return : Retourne le numero de colonne
+     * Fonction qui permet d'attribuer une colonne à une coordonnée
+     *
+     * @param colonne : la colonne de la coordonnée
      */
     public void setColonne(int colonne) {
         this.colonne = colonne;
