@@ -19,9 +19,10 @@ public class Controleur {
     */
 
     /**
-     * vérification de l'existence du fichier et conversion en liste
-     * @param fichier
-     * @return l : liste de coordonnee
+     * Fonction qui vérifie de l'existence du fichier et conversion en liste
+     *
+     * @param fichier : fichier a lire
+     * @return l liste de coordonnee
      */
     public static Liste<Coordonnee> lecture(String fichier) {
         Liste<Coordonnee> l = null;
@@ -34,8 +35,13 @@ public class Controleur {
         return l;
     }
 
-
-    public static Integer conversion(String max) { //retourne false si le
+    /**
+     * Fonction qui convertie le String lu en int
+     *
+     * @param max : Nombre de generations a tester en String
+     * @return : Nombre de generations a tester converti en int
+     */
+    public static Integer conversion(String max) {
 
         Integer n = -1;
         try {

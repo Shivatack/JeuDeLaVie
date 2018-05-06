@@ -30,8 +30,9 @@ public class Coordonnee implements Comparable<Coordonnee> {
     /**
      * Constructeur des coordonnees
      *
-     * @param : ligne
-     * @param : colonne
+     * @param ligne : ligne de la coordonnee
+     * @param colonne : colonne de la coordonnee
+     * @param voisin : voisin de la coordonnee
      */
     public Coordonnee(int ligne, int colonne, int voisin) {
         this.ligne = ligne;

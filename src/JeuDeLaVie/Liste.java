@@ -1,7 +1,5 @@
 package JeuDeLaVie;
 
-import java.nio.file.Path;
-
 public class Liste<T> {
 
     // Attributs
@@ -62,22 +60,6 @@ public class Liste<T> {
      */
     public boolean estVide(){
         return this.tete == null;
-    }
-
-
-    /**
-     * Retourne un entier correspondant a la taille de la liste
-     *
-     * @return : la taille de la liste
-     */
-    public int taille() {
-        Maillon<T> tmp = this.tete;
-        int taille = 0;
-        while (tmp != null) {
-            taille++;
-            tmp = tmp.getSuivant();
-        }
-        return taille;
     }
 
     /**
@@ -152,13 +134,13 @@ public class Liste<T> {
             int minC = JeuDeLaVie.minColonne(this);
             int maxL = JeuDeLaVie.maxLigne(this);
             int maxC = JeuDeLaVie.maxColonne(this);
-            for (int l = minL; l <= maxL; l++){
-                for (int c = minC; c <= maxC; c++){
+            for (int l = minL; l <= maxL; l++) {
+                for (int c = minC; c <= maxC; c++) {
                     if (tmp != null) {
                         if (tmp.getInfo().getLigne() == l && tmp.getInfo().getColonne() == c) {
                             s += "*";
                             tmp = tmp.getSuivant();
-                        }else{
+                        } else {
                             s += ".";
                         }
                     } else {

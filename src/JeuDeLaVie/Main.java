@@ -19,7 +19,7 @@ public class Main {
                 String s = "";
                 try {
                     s = GestionFichier.fichier((String) o[3]);
-                    s = JeuDeLaVie.traiterFich((Integer) o[1], s, (Integer) o[4]);
+                    s = JeuDeLaVie.traiterFich((int) o[0], (Integer) o[1], s, (Integer) o[4]);
                     JeuDeLaVie.eFGen(s);
                     System.out.println("\nFIN DE TRAITEMENT\n");
                 } catch(IOException e) {
@@ -30,7 +30,7 @@ public class Main {
                     JeuDeLaVie.simulationRapide((int) o[1], (String) o[3], (int) o[4]);
                 }
                 if ((Integer) o[0] == 2) {
-                    System.out.println(JeuDeLaVie.calculTQP((int) o[1], (String) o[3], (int) o[4]));
+                    System.out.println(JeuDeLaVie.calculTQP((int) o[0], (int) o[1], (String) o[3], (int) o[4]));
                 }
             }
         }

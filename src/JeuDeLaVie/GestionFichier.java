@@ -19,9 +19,9 @@ public class GestionFichier {
      * Cette fonction renvoi la liste contenant les cellules vivantes lues à partir du fichier passé en paramètre
      *
      * @param fichier : fichier lif à lire
-     * @return : Liste de cellules vivantes
-     * @throws FileNotFoundException
-     * @throws IOException
+     * @return Liste de cellules vivantes
+     * @throws FileNotFoundException : Fichier introuvable
+     * @throws IOException : Erreur avec le fichier
      */
     public static Liste LireFichier(String fichier) throws FileNotFoundException, IOException {
         Liste maListe = new Liste();
@@ -91,8 +91,8 @@ public class GestionFichier {
      * Fonction qui permet la récupération des nom des fichiers lif se trouvant dans le dossier passé en paramètre
      *
      * @param dossier : Le chemin du dossier
-     * @return : Le nom des fichiers lif se trouvant dans le dossier passé en paramètre
-     * @throws IOException
+     * @return Le nom des fichiers lif se trouvant dans le dossier passé en paramètre
+     * @throws IOException : Erreur avec le fichier
      */
     public static String fichier(String dossier) throws IOException {
         Liste<String> lp = new Liste();

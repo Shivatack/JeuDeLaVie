@@ -48,12 +48,17 @@ public class CalculGen {
 
 
     /**
-     * Fonction qui prend une liste de cellules vivantes en paramètre et qui renvoie une liste de cases avec leur nombre de cellules vivantes adjacentes
+     * Fonction qui fournit la liste avec les voisins mis a jour
      *
-     * @param : liste l de cellules
-     * @return : liste v de nombre de voisins
+     * @param l : liste des coordonnees
+     * @param monde : choix du monde
+     * @param plin : plus petite ligne
+     * @param pcol : plus petite colonne
+     * @param glin : plus grande ligne
+     * @param gcol : plus grande colonne
+     * @return liste avec les voisins mis a jour
      */
-    public static Liste listeVoisins(Liste<Coordonnee> l , int monde , int plin  , int pcol , int glin , int gcol) { // recoit la liste l qui contient les cellules vivantes de la génération actuelle
+    public static Liste listeVoisins(Liste<Coordonnee> l , int monde , int plin  , int pcol , int glin , int gcol) {
         Liste<Coordonnee> v = new Liste<Coordonnee>(); // Liste de voisins a retourner
         Maillon<Coordonnee> tmp = l.getTete(); // Maillon servant a parcourir la liste l
         while (tmp != null) {
@@ -75,11 +80,12 @@ public class CalculGen {
     }
 
     /**
+     * Fonction qui execute la simulation selon les parametres passes en parametres
      *
-     * @param d
-     * @param l
-     * @param monde
-     * @return
+     * @param d : Nombre limite de générations à atteindre
+     * @param l : Liste de cellule vivante
+     * @param monde : Choix du monde :  1:infini   2:fini   3:circulaire
+     * @return La d-ième génération de cellule vivante
      */
     public static Liste<Coordonnee> simulation(int d, Liste<Coordonnee> l, int monde){
         int compteur = 0;
@@ -97,10 +103,17 @@ public class CalculGen {
         return l;
     }
 
-    /*
-    1->infini
-    2->fini
-    3->circulaire
+    /**
+     * Fonction qui remplit la matrice autour de la cellule ciblee
+     *
+     * @param monde : Choix du monde :  1:infini   2:fini   3:circulaire
+     * @param ligne : Ligne où se trouve la cellule ciblée
+     * @param colonne : Colonne où se trouve la cellule ciblée
+     * @param plin : Plus petite ligne
+     * @param pcol : Plus petite colonne
+     * @param glin : Plus grande ligne
+     * @param gcol : Plus grande colonne
+     * @return : L'ensemble des coordonnées exploitable autour de la cellule(ligne,colonne) en fonction du monde
      */
     public static int[][] remplir_tabs(int monde , int ligne , int colonne , int plin  , int pcol , int glin , int gcol){
         int [] t_l;
