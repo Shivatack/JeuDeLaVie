@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>JeuDeLaVie</OriginalElement>
+  <nodes>
+    <node x="494.6287878787879" y="0.0">JeuDeLaVie.LigneIncorrecteException</node>
+    <node x="231.53327790096083" y="0.0">JeuDeLaVie.Coordonnee</node>
+    <node x="35.13377679231337" y="470.0">JeuDeLaVie.Controleur</node>
+    <node x="10.5" y="350.0">JeuDeLaVie.GestionFichier</node>
+    <node x="153.5" y="350.0">JeuDeLaVie.ListeTest</node>
+    <node x="307.1454545454545" y="350.0">JeuDeLaVie.CalculGen</node>
+    <node x="234.77727272727273" y="210.0">JeuDeLaVie.Liste</node>
+    <node x="265.77923133776795" y="470.0">JeuDeLaVie.JeuDeLaVie</node>
+    <node x="190.03327790096083" y="100.0">JeuDeLaVie.Maillon</node>
+    <node x="50.13377679231337" y="550.0">JeuDeLaVie.Main</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="JeuDeLaVie.JeuDeLaVie" target="JeuDeLaVie.Maillon">
+      <point x="26.75" y="-15.0" />
+      <point x="346.02923133776795" y="430.0" />
+      <point x="422.22878787878784" y="430.0" />
+      <point x="422.22878787878784" y="150.0" />
+      <point x="273.1443890120719" y="150.0" />
+      <point x="39.111111111111086" y="15.0" />
+    </edge>
+    <edge source="JeuDeLaVie.Main" target="JeuDeLaVie.Controleur">
+      <point x="0.0" y="-15.0" />
+      <point x="0.0" y="15.0" />
+    </edge>
+    <edge source="JeuDeLaVie.GestionFichier" target="JeuDeLaVie.Liste">
+      <point x="51.25" y="-15.0" />
+      <point x="123.25" y="280.0" />
+      <point x="244.59545454545454" y="280.0" />
+      <point x="-26.181818181818187" y="15.0" />
+    </edge>
+    <edge source="JeuDeLaVie.Maillon" target="JeuDeLaVie.Coordonnee">
+      <point x="0.0" y="-15.0" />
+      <point x="234.03327790096083" y="80.0" />
+      <point x="275.8666112342941" y="80.0" />
+      <point x="-12.666666666666686" y="15.0" />
+    </edge>
+    <edge source="JeuDeLaVie.CalculGen" target="JeuDeLaVie.JeuDeLaVie">
+      <point x="25.5" y="15.0" />
+      <point x="383.6454545454545" y="420.0" />
+      <point x="335.32923133776796" y="420.0" />
+      <point x="16.049999999999983" y="-15.0" />
+    </edge>
+    <edge source="JeuDeLaVie.Liste" target="JeuDeLaVie.Coordonnee">
+      <point x="24.00000000000003" y="-15.0" />
+      <point x="294.77727272727276" y="190.0" />
+      <point x="288.5332779009608" y="190.0" />
+      <point x="0.0" y="15.0" />
+    </edge>
+    <edge source="JeuDeLaVie.Main" target="JeuDeLaVie.JeuDeLaVie">
+      <point x="25.0" y="-15.0" />
+      <point x="112.63377679231337" y="525.0" />
+      <point x="319.27923133776795" y="525.0" />
+      <point x="0.0" y="15.0" />
+    </edge>
+    <edge source="JeuDeLaVie.JeuDeLaVie" target="JeuDeLaVie.GestionFichier">
+      <point x="-48.150000000000006" y="-15.0" />
+      <point x="271.1292313377679" y="440.0" />
+      <point x="113.0" y="440.0" />
+      <point x="41.0" y="15.0" />
+    </edge>
+    <edge source="JeuDeLaVie.Main" target="JeuDeLaVie.GestionFichier">
+      <point x="-25.0" y="-15.0" />
+      <point x="62.63377679231337" y="525.0" />
+      <point x="24.63377679231337" y="525.0" />
+      <point x="24.63377679231337" y="450.0" />
+      <point x="31.0" y="450.0" />
+      <point x="-41.0" y="15.0" />
+    </edge>
+    <edge source="JeuDeLaVie.ListeTest" target="JeuDeLaVie.Maillon">
+      <point x="-35.25" y="-15.0" />
+      <point x="165.25" y="260.0" />
+      <point x="164.06347006651882" y="260.0" />
+      <point x="164.06347006651882" y="180.0" />
+      <point x="214.47772234540528" y="180.0" />
+      <point x="-19.555555555555543" y="15.0" />
+    </edge>
+    <edge source="JeuDeLaVie.CalculGen" target="JeuDeLaVie.Maillon">
+      <point x="8.5" y="-15.0" />
+      <point x="366.38327790096076" y="160.0" />
+      <point x="263.36661123429417" y="160.0" />
+      <point x="29.33333333333337" y="15.0" />
+    </edge>
+    <edge source="JeuDeLaVie.Controleur" target="JeuDeLaVie.GestionFichier">
+      <point x="0.0" y="-15.0" />
+      <point x="87.63377679231337" y="450.0" />
+      <point x="72.0" y="450.0" />
+      <point x="0.0" y="15.0" />
+    </edge>
+    <edge source="JeuDeLaVie.Liste" target="JeuDeLaVie.JeuDeLaVie">
+      <point x="19.636363636363626" y="15.0" />
+      <point x="290.41363636363633" y="320.0" />
+      <point x="296.6454545454545" y="320.0" />
+      <point x="296.6454545454545" y="400.0" />
+      <point x="313.92923133776793" y="400.0" />
+      <point x="-5.350000000000023" y="-15.0" />
+    </edge>
+    <edge source="JeuDeLaVie.JeuDeLaVie" target="JeuDeLaVie.CalculGen">
+      <point x="5.349999999999994" y="-15.0" />
+      <point x="324.6292313377679" y="410.0" />
+      <point x="332.6454545454545" y="410.0" />
+      <point x="-25.5" y="15.0" />
+    </edge>
+    <edge source="JeuDeLaVie.JeuDeLaVie" target="JeuDeLaVie.Coordonnee">
+      <point x="48.150000000000006" y="-15.0" />
+      <point x="367.429231337768" y="450.0" />
+      <point x="443.6287878787879" y="450.0" />
+      <point x="443.6287878787879" y="50.0" />
+      <point x="339.1999445676274" y="50.0" />
+      <point x="50.666666666666636" y="15.0" />
+    </edge>
+    <edge source="JeuDeLaVie.GestionFichier" target="JeuDeLaVie.Coordonnee">
+      <point x="-30.75" y="-15.0" />
+      <point x="41.25" y="330.0" />
+      <point x="42.737823355506265" y="330.0" />
+      <point x="42.737823355506265" y="70.0" />
+      <point x="263.1999445676275" y="70.0" />
+      <point x="-25.333333333333343" y="15.0" />
+    </edge>
+    <edge source="JeuDeLaVie.JeuDeLaVie" target="JeuDeLaVie.Liste">
+      <point x="-16.05000000000001" y="-15.0" />
+      <point x="303.22923133776794" y="410.0" />
+      <point x="285.94545454545454" y="410.0" />
+      <point x="285.94545454545454" y="330.0" />
+      <point x="283.8681818181818" y="330.0" />
+      <point x="13.090909090909093" y="15.0" />
+    </edge>
+    <edge source="JeuDeLaVie.Controleur" target="JeuDeLaVie.Liste">
+      <point x="35.0" y="-15.0" />
+      <point x="122.63377679231337" y="450.0" />
+      <point x="258.0" y="450.0" />
+      <point x="258.0" y="310.0" />
+      <point x="264.2318181818182" y="310.0" />
+      <point x="-6.545454545454561" y="15.0" />
+    </edge>
+    <edge source="JeuDeLaVie.ListeTest" target="JeuDeLaVie.Liste">
+      <point x="35.25" y="-15.0" />
+      <point x="235.75" y="300.0" />
+      <point x="257.68636363636364" y="300.0" />
+      <point x="-13.090909090909093" y="15.0" />
+    </edge>
+    <edge source="JeuDeLaVie.GestionFichier" target="JeuDeLaVie.Maillon">
+      <point x="-10.25" y="-15.0" />
+      <point x="61.75" y="330.0" />
+      <point x="57.563470066518846" y="330.0" />
+      <point x="57.563470066518846" y="160.0" />
+      <point x="194.92216678984974" y="160.0" />
+      <point x="-39.111111111111086" y="15.0" />
+    </edge>
+    <edge source="JeuDeLaVie.Controleur" target="JeuDeLaVie.Coordonnee">
+      <point x="-35.0" y="-15.0" />
+      <point x="52.63377679231337" y="440.0" />
+      <point x="0.0" y="440.0" />
+      <point x="0.0" y="50.0" />
+      <point x="237.86661123429417" y="50.0" />
+      <point x="-50.66666666666666" y="15.0" />
+    </edge>
+    <edge source="JeuDeLaVie.Liste" target="JeuDeLaVie.Maillon">
+      <point x="2.8421709430404007E-14" y="-15.0" />
+      <point x="270.77727272727276" y="180.0" />
+      <point x="243.8110556787386" y="180.0" />
+      <point x="9.777777777777771" y="15.0" />
+    </edge>
+    <edge source="JeuDeLaVie.CalculGen" target="JeuDeLaVie.Liste">
+      <point x="-42.5" y="-15.0" />
+      <point x="315.6454545454545" y="310.0" />
+      <point x="296.95909090909095" y="310.0" />
+      <point x="26.181818181818187" y="15.0" />
+    </edge>
+    <edge source="JeuDeLaVie.CalculGen" target="JeuDeLaVie.Coordonnee">
+      <point x="42.5" y="-15.0" />
+      <point x="400.6454545454545" y="330.0" />
+      <point x="397.70358462675534" y="330.0" />
+      <point x="397.70358462675534" y="70.0" />
+      <point x="313.86661123429417" y="70.0" />
+      <point x="25.33333333333332" y="15.0" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="1.0" x="162.5" y="313.5" />
+  <SelectedNodes />
+  <Categories />
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+
